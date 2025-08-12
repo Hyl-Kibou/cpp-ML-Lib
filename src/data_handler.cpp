@@ -46,7 +46,7 @@ void data_handler::read_feature_vector(std::string path){
         printf("All %lld Feature vectors read and loaded.\n", data_array->size());
     }
     else{
-        printf("File not found.\n");
+        printf("Data File not found.\n");
         exit(1);
     }
 }
@@ -81,7 +81,7 @@ void data_handler::read_feature_labels(std::string path){
         printf("All %lld labels read and loaded.\n", data_array->size());
     }
     else{
-        printf("File not found.\n");
+        printf("Data File not found.\n");
         exit(1);
     }
 }
@@ -158,7 +158,7 @@ std::vector<data *> * data_handler::get_validation_data(){
     return validation_data;
 }
 
-int main(){
+int main1(){
 
     data_handler *dh = new data_handler();
 
