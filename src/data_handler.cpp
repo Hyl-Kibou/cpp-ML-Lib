@@ -10,6 +10,13 @@ data_handler::~data_handler(){
     //erase the things from data_handler
 }
 
+void data_handler::scale_data_array(int size){
+    for(int i = 0; i<size; ++i){ //Iterate on all elements
+        data *d = new data();
+        data_array->push_back(d);
+    }
+}
+
 void data_handler::read_feature_vector(std::string path){
     uint32_t header[4]; //MAGIC, NUM IMAGES, ROWSIZE, COLSIZE
 
@@ -22,25 +29,26 @@ void data_handler::read_feature_vector(std::string path){
                 header[i] = convert_to_little_endian(bytes);
             }
         }
+
+        if(data_array->empty()){
+            scale_data_array(header[1]);            
+        }
         
         printf("FV File header read.\n");
         
         int image_size = header[2]*header[3];
-        for(int i = 0; i<header[1]; ++i){ //Iterate on all elements
-            data *d = new data();
+        for(int i = 0; i<header[1]; ++i){ //Iterate on all elements            
             uint8_t element[1];
             
             for(int j = 0; j<image_size; ++j){ //Read all the data from element i
                 if(fread(element, sizeof(element), 1, f)){
-                    d->append_to_feature_vector(element[0]);                    
+                    data_array->at(i)->append_to_feature_vector(element[0]);                    
                 }
                 else{
                     printf("Error reading from File.\n");
                     exit(1);
                 }
             }
-
-            data_array->push_back(d);
 
         }
         printf("All %lld Feature vectors read and loaded.\n", data_array->size());
@@ -66,6 +74,10 @@ void data_handler::read_feature_labels(std::string path){
         }
         
         printf("Label File header read.\n");
+
+        if(data_array->empty()){
+            scale_data_array(header[1]);            
+        }
         
         for(int i = 0; i<header[1]; ++i){ //Iterate on all elements
             uint8_t element[1];

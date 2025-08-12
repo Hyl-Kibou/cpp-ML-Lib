@@ -126,12 +126,15 @@ double knn::validate_performance(){
     for(data * query_point : *validation_data){
         find_knearest(query_point);
         int prediction = predict();
+        printf("Current: %d | Guess: %d.", query_point->get_label(), prediction);
         if(prediction == query_point->get_label()){
             ++correct_hits;
         }
-        printf("Current: %d | Guess: %d.\n", query_point->get_label(), prediction);
-        ++data_index;
-        printf("Current Performance #%d = %.3f %%\n", data_index, ((double)correct_hits*100.0)/((double)data_index));
+        else{
+            printf(" Missed!");
+        }
+        ++data_index;        
+        printf("\nCurrent Performance #%4d = %.3f %%\n", data_index, ((double)correct_hits*100.0)/((double)data_index));
     }
     current_performance = ((double)correct_hits*100.0)/((double)validation_data->size());
     printf("Validation Performance for K: %d = %.3f %%\n", k, current_performance);
@@ -140,7 +143,6 @@ double knn::validate_performance(){
 double knn::test_performance(){
     double current_performance = 0;
     int correct_hits  = 0;
-    //int data_index = 0;
     
     for(data * query_point : *test_data){
         find_knearest(query_point);
@@ -148,8 +150,6 @@ double knn::test_performance(){
         if(prediction == query_point->get_label()){
             ++correct_hits;
         }
-        //++data_index;
-        //printf("Current Performance = %.3f %%\n", ((double)count*100.0)/((double)data_index));
     }
     current_performance = ((double)correct_hits*100.0)/((double)test_data->size());
     printf("Testing Performance = %.3f %%\n", current_performance);
@@ -159,8 +159,8 @@ double knn::test_performance(){
 int main(){
     data_handler *dh = new data_handler();
 
-    dh->read_feature_vector("../data/train-images-idx3-ubyte/train-images.idx3-ubyte");
     dh->read_feature_labels("../data/train-labels-idx1-ubyte/train-labels.idx1-ubyte");
+    dh->read_feature_vector("../data/train-images-idx3-ubyte/train-images.idx3-ubyte");
 
     dh->split_data();
     dh->count_classes();

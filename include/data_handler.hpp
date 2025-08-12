@@ -31,6 +31,8 @@ class data_handler
     public:
         data_handler();
         ~data_handler();
+        
+        void scale_data_array(int size);
 
         void read_feature_vector(std::string path);
         void read_feature_labels(std::string path);
