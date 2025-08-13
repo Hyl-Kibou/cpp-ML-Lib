@@ -18,7 +18,7 @@ class knn : public common_data
 
         void set_k(int val);
         
-        int predict();
+        LABEL_VAR_TYPE predict();
         double calculate_distance(data* query_point, data* input);
         double validate_performance();
         double test_performance();

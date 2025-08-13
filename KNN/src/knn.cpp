@@ -47,12 +47,14 @@ void knn::find_knearest(data * query_point){
 
         }
 
+        /*
         if(nearest_neighbors.size()>k){
             auto it =  nearest_neighbors.end();
             --it;
-
+            
             nearest_neighbors.erase(it);
         }
+        */
     }
 
     for(std::pair<double, int> x: nearest_neighbors){
@@ -64,9 +66,9 @@ void knn::set_k(int val){
     k = val;
 }
 
-int knn::predict(){
-    std::map<uint8_t, int> class_freq;
-    uint8_t most_common_class;    
+LABEL_VAR_TYPE knn::predict(){
+    std::map<LABEL_VAR_TYPE, int> class_freq;
+    LABEL_VAR_TYPE most_common_class;    
 
     for(data * x : *neighbors){
         if(class_freq.find(x->get_label())==class_freq.end()){
@@ -76,7 +78,7 @@ int knn::predict(){
         ++class_freq[x->get_label()];
     }
 
-    for(std::pair<uint8_t, int> x : class_freq){
+    for(std::pair<LABEL_VAR_TYPE, int> x : class_freq){
         if(x.second>class_freq[most_common_class]){
             most_common_class = x.first;
         }
@@ -111,7 +113,7 @@ double knn::validate_performance(){
 
     for(data * query_point : *validation_data){
         find_knearest(query_point);
-        int prediction = predict();
+        LABEL_VAR_TYPE prediction = predict();
         printf("Current: %d | Guess: %d.", query_point->get_label(), prediction);
         if(prediction == query_point->get_label()){
             ++correct_hits;
@@ -132,7 +134,7 @@ double knn::test_performance(){
     
     for(data * query_point : *test_data){
         find_knearest(query_point);
-        int prediction = predict();
+        LABEL_VAR_TYPE prediction = predict();
         if(prediction == query_point->get_label()){
             ++correct_hits;
         }

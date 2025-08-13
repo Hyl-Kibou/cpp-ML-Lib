@@ -38,7 +38,7 @@ void data_handler::read_feature_vector(std::string path){
         
         int image_size = header[2]*header[3];
         for(int i = 0; i<header[1]; ++i){ //Iterate on all elements            
-            uint8_t element[1];
+            INPUT_VAR_TYPE element[1];
             
             for(int j = 0; j<image_size; ++j){ //Read all the data from element i
                 if(fread(element, sizeof(element), 1, f)){
@@ -80,7 +80,7 @@ void data_handler::read_feature_labels(std::string path){
         }
         
         for(int i = 0; i<header[1]; ++i){ //Iterate on all elements
-            uint8_t element[1];
+            LABEL_VAR_TYPE element[1];
             
             if(fread(element, sizeof(element), 1, f)){
                 data_array->at(i)->set_label(element[0]);

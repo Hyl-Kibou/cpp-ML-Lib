@@ -1,20 +1,20 @@
 #include "data.hpp"
 
 data::data(){
-    feature_vector = new std::vector<uint8_t>;
+    feature_vector = new std::vector<INPUT_VAR_TYPE>;
 }
 
 data::~data(){
     //
 }
 
-void data::set_feature_vector (std::vector<uint8_t> *vec){
+void data::set_feature_vector (std::vector<INPUT_VAR_TYPE> *vec){
     feature_vector = vec;
 }
-void data::append_to_feature_vector(uint8_t val){
+void data::append_to_feature_vector(INPUT_VAR_TYPE val){
     feature_vector->push_back(val);
 }
-void data::set_label(uint8_t val){
+void data::set_label(LABEL_VAR_TYPE val){
     label = val;
 }
 void data::set_enumerated_label(int val){
@@ -27,13 +27,13 @@ void data::set_distance(double val){
 int data::get_feature_vector_size(){
     return feature_vector->size();
 }
-uint8_t data::get_label(){
+LABEL_VAR_TYPE data::get_label(){
     return label;
 }
-uint8_t data::get_enumerated_label(){
+int data::get_enumerated_label(){
     return enum_label;
 }
 
-std::vector<uint8_t> * data::get_feature_vector(){
+std::vector<INPUT_VAR_TYPE> * data::get_feature_vector(){
     return feature_vector;
 }

@@ -22,7 +22,7 @@ class data_handler
     int num_classes;
     int feature_vector_size;
 
-    std::map<uint8_t, int> class_map;
+    std::map<LABEL_VAR_TYPE, int> class_map;
 
     const double TRAIN_SET_PERCENT = 0.75;
     const double TEST_SET_PERCENT = 0.20;
