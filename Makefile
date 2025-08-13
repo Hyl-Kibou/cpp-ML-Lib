@@ -7,7 +7,7 @@ LIB_DATA := libdata.so
 
 all : $(LIB_DATA)
 
-$(LIB_DATA) : libdir objdir obj/data_handler.o obj/data.o
+$(LIB_DATA) : libdir objdir obj/data_handler.o obj/data.o obj/common.o
 	$(CC) $(CFLAGS) -o $(LOCAL_ROOT)/lib/$(LIB_DATA) obj/*.o
 	rm -r $(LOCAL_ROOT)/obj
 	@echo "Compilation Successful !!"
@@ -23,6 +23,9 @@ obj/data_handler.o : $(SRC)/data_handler.cpp
 
 obj/data.o : $(SRC)/data.cpp
 	$(CC) -fPIC $(CFLAGS) -o obj/data.o -I$(INCLUDE_DIR) -c $(SRC)/data.cpp
+
+obj/common.o : $(SRC)/common.cpp
+	$(CC) -fPIC $(CFLAGS) -o obj/common.o -I$(INCLUDE_DIR) -c $(SRC)/common.cpp
 
 clean:
 	rm -r $(LOCAL_ROOT)/lib

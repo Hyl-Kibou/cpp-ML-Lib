@@ -22,10 +22,7 @@ knn::~knn(){
 
 
 void knn::find_knearest(data * query_point){
-    neighbors = new std::vector<data *>;
-    //double min = std::numeric_limits<double>::max();
-    //double previous_min = min;
-    //int index = 0;
+    neighbors = new std::vector<data *>;    
 
     if(k >= train_data->size()){
         printf("There are less than k neighbors, only: %d.\n", train_data->size()-1);
@@ -63,17 +60,6 @@ void knn::find_knearest(data * query_point){
     }
 }
 
-void knn::set_training_data(std::vector<data *> *vect){
-    train_data = vect;
-}
-
-void knn::set_test_data(std::vector<data *> *vect){
-    test_data = vect;
-}
-
-void knn::set_validation_data(std::vector<data *> *vect){
-    validation_data = vect;
-}
 void knn::set_k(int val){
     k = val;
 }

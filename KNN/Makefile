@@ -8,7 +8,7 @@ LDFLAGS := -L$(LIB_DIR) -Wl,-rpath,$(LIB_DIR)
 
 all : main
 
-main : $(SRC)/knn.cpp
+main : $(SRC)/knn.cpp $(LIB_DIR)/libdata.so
 	$(CC) $(CFLAGS) $(SRC)/knn.cpp -o main $(LDFLAGS) -I$(INCLUDE_DIR) \
 	-I$(CPP_ML_LIB_ROOT)/include -ldata
 
