@@ -19,7 +19,7 @@ class data_handler
     std::vector<data *> *test_data;
     std::vector<data *> *validation_data;
 
-    int num_classes;
+    int * num_classes;
     int feature_vector_size;
 
     std::map<LABEL_VAR_TYPE, int> class_map;
@@ -47,6 +47,7 @@ class data_handler
         std::vector<data *> * get_test_data();
         std::vector<data *> * get_validation_data();
 
+        int * get_class_count();
 };
 
 #endif

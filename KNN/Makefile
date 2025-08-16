@@ -3,7 +3,7 @@ SRC := $(CPP_ML_LIB_ROOT)/KNN/src
 INCLUDE_DIR := $(CPP_ML_LIB_ROOT)/KNN/include
 LIB_DIR := $(CPP_ML_LIB_ROOT)/lib
 
-CFLAGS := -std=c++17 -DEUCLID
+CFLAGS := -std=c++17 -DEUCLID -fPIC
 LDFLAGS := -L$(LIB_DIR) -Wl,-rpath,$(LIB_DIR)
 
 all : main

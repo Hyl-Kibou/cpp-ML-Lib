@@ -5,6 +5,7 @@ data_handler::data_handler(){
     test_data = new std::vector<data *>;
     train_data = new std::vector<data *>;
     validation_data = new std::vector<data *>;
+    num_classes = new int;
 }
 data_handler::~data_handler(){
     //erase the things from data_handler
@@ -149,8 +150,8 @@ void data_handler::count_classes(){
         x->set_enumerated_label(class_map[x->get_label()]);
     }
 
-    num_classes = count;
-    printf("Counted number of classes: %d.\n", num_classes);
+    *num_classes = count;
+    printf("Counted number of classes: %d.\n", *num_classes);
 }
 
 uint32_t data_handler::convert_to_little_endian(const unsigned char* bytes){
@@ -168,6 +169,10 @@ std::vector<data *> * data_handler::get_test_data(){
 }
 std::vector<data *> * data_handler::get_validation_data(){
     return validation_data;
+}
+
+int * data_handler::get_class_count(){
+    return num_classes;
 }
 
 int main1(){
