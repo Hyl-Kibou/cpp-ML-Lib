@@ -22,7 +22,8 @@ class data_handler
     int * num_classes;
     int feature_vector_size;
 
-    std::map<LABEL_VAR_TYPE, int> class_map;
+    std::map<LABEL_VAR_TYPE, int> label_map;
+    std::map<CLASS_VAR_TYPE, int> class_map;
 
     const double TRAIN_SET_PERCENT = 0.75;
     const double TEST_SET_PERCENT = 0.20;
@@ -33,6 +34,8 @@ class data_handler
         ~data_handler();
         
         void scale_data_array(int size);
+
+        void read_csv(std::string path, std::string delimeter, int class_position);
 
         void read_feature_vector(std::string path);
         void read_feature_labels(std::string path);

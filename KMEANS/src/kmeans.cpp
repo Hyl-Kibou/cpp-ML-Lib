@@ -203,6 +203,8 @@ int main(){
     dh->read_feature_labels("../data/train-labels-idx1-ubyte/train-labels.idx1-ubyte");
     dh->read_feature_vector("../data/train-images-idx3-ubyte/train-images.idx3-ubyte");
 
+    //dh->read_csv("../data/iris_data_set/iris.csv", ",", -1);
+
     dh->split_data();
     dh->count_classes();
 
@@ -210,7 +212,7 @@ int main(){
     double best_performance = 0.0;  
     int best_k = *(dh->get_class_count());   
 
-    for(int k = *(dh->get_class_count())+10; k < dh->get_training_data()->size()/10; ++k ){
+    for(int k = *(dh->get_class_count()); k < dh->get_training_data()->size()/10; ++k ){
         kmeans *km = new kmeans(k);
         km->set_training_data(dh->get_training_data());
         km->set_test_data(dh->get_test_data());
@@ -219,7 +221,8 @@ int main(){
 
         km->init_clusters();
         //km->init_clusters_for_each_class();
-        km->train(200, 5);
+        //km->train(200, 5);
+        km->train();
         //km->train_one_round();
         performance = km->validate();
         printf("Current Performance with (K=%d): %.2f%\n", k, performance);
@@ -238,5 +241,5 @@ int main(){
     km->init_clusters();
     km->train();
     performance = km->test();
-    printf("Test Performance with (K=%d): %.2f%.\n", best_k, performance);    
+    printf("Test Performance with (K=%d): %.2f%%.\n", best_k, performance);    
 }

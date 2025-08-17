@@ -145,13 +145,16 @@ double knn::test_performance(){
 }
 
 int main(){
+    
     data_handler *dh = new data_handler();
-
+    
     dh->read_feature_labels("../data/train-labels-idx1-ubyte/train-labels.idx1-ubyte");
     dh->read_feature_vector("../data/train-images-idx3-ubyte/train-images.idx3-ubyte");
+    
+    //dh->read_csv("../data/iris_data_set/iris.csv", ",", -1);
 
     dh->split_data();
-    dh->count_classes();
+    dh->count_classes();    
 
     knn *knearest = new knn();
     knearest->set_training_data(dh->get_training_data());
