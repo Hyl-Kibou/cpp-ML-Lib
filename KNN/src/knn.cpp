@@ -21,8 +21,8 @@ knn::~knn(){
 }
 
 
-void knn::find_knearest(data * query_point){
-    neighbors = new std::vector<data *>;    
+void knn::find_knearest(Data * query_point){
+    neighbors = new std::vector<Data *>;    
 
     if(k >= train_data->size()){
         printf("There are less than k neighbors, only: %d.\n", train_data->size()-1);
@@ -70,7 +70,7 @@ LABEL_VAR_TYPE knn::predict(){
     std::map<LABEL_VAR_TYPE, int> class_freq;
     LABEL_VAR_TYPE most_common_class;    
 
-    for(data * x : *neighbors){
+    for(Data * x : *neighbors){
         if(class_freq.find(x->get_label())==class_freq.end()){
             class_freq[x->get_label()]=0;
             most_common_class = x->get_label();
@@ -87,7 +87,7 @@ LABEL_VAR_TYPE knn::predict(){
     return most_common_class;
 }
 
-double knn::calculate_distance(data* query_point, data* input){
+double knn::calculate_distance(Data* query_point, Data* input){
     double distance = 0.0;
 
     if(query_point->get_feature_vector_size()!= input->get_feature_vector_size()){
@@ -111,7 +111,7 @@ double knn::validate_performance(){
     int correct_hits  = 0;
     int data_index = 0;
 
-    for(data * query_point : *validation_data){
+    for(Data * query_point : *validation_data){
         find_knearest(query_point);
         LABEL_VAR_TYPE prediction = predict();
         printf("Current: %d | Guess: %d.", query_point->get_label(), prediction);
@@ -132,7 +132,7 @@ double knn::test_performance(){
     double current_performance = 0;
     int correct_hits  = 0;
     
-    for(data * query_point : *test_data){
+    for(Data * query_point : *test_data){
         find_knearest(query_point);
         LABEL_VAR_TYPE prediction = predict();
         if(prediction == query_point->get_label()){
@@ -146,20 +146,22 @@ double knn::test_performance(){
 
 int main(){
     
-    data_handler *dh = new data_handler();
+    DataHandler *dh = new DataHandler();
     
     dh->read_feature_labels("../data/train-labels-idx1-ubyte/train-labels.idx1-ubyte");
     dh->read_feature_vector("../data/train-images-idx3-ubyte/train-images.idx3-ubyte");
     
     //dh->read_csv("../data/iris_data_set/iris.csv", ",", -1);
 
-    dh->split_data();
-    dh->count_classes();    
+    //dh->split_data();
+    //dh->count_classes();    
 
     knn *knearest = new knn();
-    knearest->set_training_data(dh->get_training_data());
-    knearest->set_test_data(dh->get_test_data());
-    knearest->set_validation_data(dh->get_validation_data());
+    //knearest->set_training_data(dh->get_training_data());
+    //knearest->set_test_data(dh->get_test_data());
+    //knearest->set_validation_data(dh->get_validation_data());
+
+    knearest->prep_data(dh);
 
     double performance = 0;
     double best_performance = -1;

@@ -132,7 +132,7 @@ void kmeans::train_one_round(){
     }                               
 }
 
-double kmeans::euclidean_distance(std::vector<double> * centroid, data * point){
+double kmeans::euclidean_distance(std::vector<double> * centroid, Data * point){
     double distance = 0.0;
 
     if(centroid->size()!=point->get_feature_vector_size()){
@@ -152,7 +152,7 @@ double kmeans::validate(){
     
     double num_correct = 0.0;
     
-    for(data * query_point : *validation_data){
+    for(Data * query_point : *validation_data){
         double min_dist = std::numeric_limits<double>::max();
         int best_cluster = 0;
         
@@ -176,7 +176,7 @@ double kmeans::validate(){
 double kmeans::test(){
     double num_correct = 0.0;
 
-    for(data * query_point : *test_data){
+    for(Data * query_point : *test_data){
         double min_dist = std::numeric_limits<double>::max();
         int best_cluster = 0;
 
@@ -198,7 +198,7 @@ double kmeans::test(){
 }
 
 int main(){
-    data_handler *dh = new data_handler();
+    DataHandler *dh = new DataHandler();
 
     dh->read_feature_labels("../data/train-labels-idx1-ubyte/train-labels.idx1-ubyte");
     dh->read_feature_vector("../data/train-images-idx3-ubyte/train-images.idx3-ubyte");

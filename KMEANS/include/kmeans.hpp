@@ -15,16 +15,16 @@ typedef struct cluster{
 
     std::vector<double> *centroid;
     std::vector<double> *next_centroid;
-    std::vector<data *> *cluster_points;
+    std::vector<Data *> *cluster_points;
     int num_cluster_points;
     std::unordered_map<LABEL_VAR_TYPE, int> class_counts;
     LABEL_VAR_TYPE most_frequent_class;    
 
-    cluster(data * initial_point){
+    cluster(Data * initial_point){
         centroid = new std::vector<double>;
         next_centroid = new std::vector<double>;
         num_cluster_points = 1;
-        //cluster_points = new std::vector<data *>;
+        //cluster_points = new std::vector<Data *>;
         for(auto value: *(initial_point->get_feature_vector())){
             centroid->push_back(value);
             next_centroid->push_back(value);
@@ -34,7 +34,7 @@ typedef struct cluster{
         most_frequent_class = initial_point->get_label();
     }
 
-    void add_to_cluster_and_update(data *point){
+    void add_to_cluster_and_update(Data *point){
         ++num_cluster_points;
         for(int i = 0; i<centroid->size(); ++i){
             double value=centroid->at(i);
@@ -55,7 +55,7 @@ typedef struct cluster{
         }
     }
 
-    void add_to_cluster(data *point){
+    void add_to_cluster(Data *point){
         ++num_cluster_points;
         for(int i = 0; i<next_centroid->size(); ++i){
             double value=next_centroid->at(i);
@@ -98,7 +98,7 @@ typedef struct cluster{
 
 } cluster_t;
 
-class kmeans : public common_data{
+class kmeans : public CommonData{
     int num_clusters;
     std::vector<cluster_t *> *clusters;
     std::vector<int> *used_indexes;
@@ -112,7 +112,7 @@ class kmeans : public common_data{
 
         void train(int, double);
         void train_one_round();
-        double euclidean_distance(std::vector<double> *, data *);
+        double euclidean_distance(std::vector<double> *, Data *);
         double validate();
         double test();
 
